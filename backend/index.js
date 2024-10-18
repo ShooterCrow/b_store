@@ -1,5 +1,5 @@
 import express from "express";
-import {PORT} from "./confij.js";
+import {details} from "./confij.js";
 
 const app = express();
 
@@ -8,6 +8,6 @@ app.get('/', (req, res) => {
     return res.status(201).send("Life is Jood")
 })
 
-app.listen(PORT, () => {
+app.listen(details.PORT, () => {
     console.log(`App is listenin to port ${PORT}`)
 })
