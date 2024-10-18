@@ -1,13 +1,22 @@
 import express from "express";
-import {details} from "./confij.js";
+import { PORT, mongoDBURL } from "./confij.js";
+import mongoose from "mongoose";
 
 const app = express();
 
-app.get('/', (req, res) => {
-    console.log(req)
-    return res.status(201).send("Life is Jood")
-})
+app.get("/", (req, res) => {
+  console.log(req);
+  return res.status(201).send("Life is Jood");
+});
 
-app.listen(details.PORT, () => {
-    console.log(`App is listenin to port ${PORT}`)
-})
+mongoose
+  .connect(mongoDBURL)
+  .then(() => {
+    console.log("App connectd to database");
+    app.listen(PORT, () => {
+      console.log(`App is listenin to port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });
