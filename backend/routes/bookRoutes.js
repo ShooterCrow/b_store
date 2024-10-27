@@ -1,10 +1,10 @@
 import express from "express";
-import { Book } from "../models/bStoreModel";
+import { Book } from "../models/bStoreModel.js";
 
-const router = express.router()
+const router = express.Router()
 
 //Post to DB
-router.post("/books", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     if (!req.body.title || !req.body.author || !req.body.publishYear) {
       return res
@@ -26,8 +26,9 @@ router.post("/books", async (req, res) => {
   }
 });
 
+
 //Jet all boojs from DB
-router.get("/books", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const books = await Book.find({});
     console.log(books);
@@ -42,7 +43,7 @@ router.get("/books", async (req, res) => {
 });
 
 //Jet a particular booj from DB
-router.get("/book/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     if (!id) {
@@ -57,7 +58,7 @@ router.get("/book/:id", async (req, res) => {
 });
 
 //Update a booj in DB
-router.put("/book/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     if (!req.body.title || !req.body.author) {
@@ -81,7 +82,7 @@ router.put("/book/:id", async (req, res) => {
 });
 
 //Delete a booj from DB
-router.delete("/book/:id", async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const result = await Book.findByIdAndDelete(id);
@@ -96,6 +97,5 @@ router.delete("/book/:id", async (req, res) => {
   }
 });
 
-console.log(router)
 
 export default router

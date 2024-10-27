@@ -1,8 +1,8 @@
 import express from "express";
-import { PORT, mongoDBURL } from "./confij.js";
+import info from "./confij.js";
 import mongoose from "mongoose";
 import { Book } from "./models/bStoreModel.js";
-// import bookRoutes from "./routes/bookRoutes.js";
+import bookRoutes from "./routes/bookRoutes.js";
 
 const app = express();
 
@@ -12,12 +12,14 @@ app.get("/", (req, res) => {
   return res.status(201).send("Life is Jood");
 });
 
+app.use("/books", bookRoutes)
+
 mongoose
-  .connect(mongoDBURL)
+  .connect(info.mongoDBURL)
   .then(() => {
     console.log("App connectd to database");
-    app.listen(PORT, () => {
-      console.log(`App is listenin to port ${PORT}`);
+    app.listen(info.PORT, () => {
+      console.log(`App is listenin to port ${info.PORT}`);
     });
   })
   .catch((error) => {

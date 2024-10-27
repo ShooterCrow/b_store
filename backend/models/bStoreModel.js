@@ -4,19 +4,22 @@ const bookSchema = mongoose.Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: true
     },
     author: {
       type: String,
-      required: true,
+      required: true
     },
     publishYear: {
       type: Number,
-      required: true,
-    },
+      required: true
+    }
   },
   {
     timestamps: true
   }
-);
-export const Book = mongoose.model("Master Piece", bookSchema);
+)
+
+export const Book = mongoose.model("newOne", bookSchema)
+
+
