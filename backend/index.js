@@ -1,38 +1,33 @@
 import express from "express";
-import info from "./confij.js";
+import confij from "./confij.js";
 import mongoose from "mongoose";
-import { Book } from "./models/bStoreModel.js";
 import bookRoutes from "./routes/bookRoutes.js";
-import cors from "cors"
+import cors from "cors";
+const { PORT, mongoDBURL } = confij;
 
 const app = express();
-
 app.use(express.json());
 
-app.use(cors())
-
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000",
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     allowedHeaders: ["Content-Type"]
-//   })
-// )
-
 app.get("/", (req, res) => {
-  return res.status(201).send("Life is Jood");
+  return res.status(200).send("Test message");
 });
 
 app.use("/books", bookRoutes)
 
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type"]
+}))
+
 mongoose
-  .connect(info.mongoDBURL)
+  .connect(mongoDBURL)
   .then(() => {
-    console.log("App connectd to database");
-    app.listen(info.PORT, () => {
-      console.log(`App is listenin to port ${info.PORT}`);
+    app.listen(PORT, () => {
+      console.log(`Server is listenin at port ${PORT}`);
     });
+    console.log("Connected to DB");
   })
-  .catch((error) => {
-    console.log(error);
+  .catch((err) => {
+    console.log(err);
   });
